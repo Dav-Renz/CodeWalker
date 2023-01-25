@@ -52,6 +52,7 @@ namespace CodeWalker
             this.EnableDlcCheckBox = new System.Windows.Forms.CheckBox();
             this.WorldYmapWeatherFilterCheckBox = new System.Windows.Forms.CheckBox();
             this.WorldYmapTimeFilterCheckBox = new System.Windows.Forms.CheckBox();
+            this.WorldNorhYanktonYmapsCheckBox = new System.Windows.Forms.CheckBox();
             this.WorldScriptedYmapsCheckBox = new System.Windows.Forms.CheckBox();
             this.WorldDetailDistLabel = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -554,6 +555,7 @@ namespace CodeWalker
             this.ViewWorldTabPage.Controls.Add(this.EnableDlcCheckBox);
             this.ViewWorldTabPage.Controls.Add(this.WorldYmapWeatherFilterCheckBox);
             this.ViewWorldTabPage.Controls.Add(this.WorldYmapTimeFilterCheckBox);
+            this.ViewWorldTabPage.Controls.Add(this.WorldNorhYanktonYmapsCheckBox);
             this.ViewWorldTabPage.Controls.Add(this.WorldScriptedYmapsCheckBox);
             this.ViewWorldTabPage.Controls.Add(this.WorldDetailDistLabel);
             this.ViewWorldTabPage.Controls.Add(this.label18);
@@ -575,10 +577,10 @@ namespace CodeWalker
             // 
             this.EnableModsCheckBox.AutoSize = true;
             this.EnableModsCheckBox.Enabled = false;
-            this.EnableModsCheckBox.Location = new System.Drawing.Point(6, 280);
+            this.EnableModsCheckBox.Location = new System.Drawing.Point(6, 303);
             this.EnableModsCheckBox.Name = "EnableModsCheckBox";
             this.EnableModsCheckBox.Size = new System.Drawing.Size(88, 17);
-            this.EnableModsCheckBox.TabIndex = 68;
+            this.EnableModsCheckBox.TabIndex = 69;
             this.EnableModsCheckBox.Text = "Enable Mods";
             this.EnableModsCheckBox.UseVisualStyleBackColor = true;
             this.EnableModsCheckBox.CheckedChanged += new System.EventHandler(this.EnableModsCheckBox_CheckedChanged);
@@ -586,10 +588,10 @@ namespace CodeWalker
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(1, 337);
+            this.label30.Location = new System.Drawing.Point(1, 360);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(60, 13);
-            this.label30.TabIndex = 70;
+            this.label30.TabIndex = 71;
             this.label30.Text = "DLC Level:";
             // 
             // DlcLevelComboBox
@@ -599,10 +601,10 @@ namespace CodeWalker
             this.DlcLevelComboBox.FormattingEnabled = true;
             this.DlcLevelComboBox.Items.AddRange(new object[] {
             "<Loading...>"});
-            this.DlcLevelComboBox.Location = new System.Drawing.Point(62, 334);
+            this.DlcLevelComboBox.Location = new System.Drawing.Point(62, 357);
             this.DlcLevelComboBox.Name = "DlcLevelComboBox";
             this.DlcLevelComboBox.Size = new System.Drawing.Size(126, 21);
-            this.DlcLevelComboBox.TabIndex = 70;
+            this.DlcLevelComboBox.TabIndex = 71;
             this.DlcLevelComboBox.SelectedIndexChanged += new System.EventHandler(this.DlcLevelComboBox_SelectedIndexChanged);
             this.DlcLevelComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DlcLevelComboBox_KeyPress);
             // 
@@ -610,10 +612,10 @@ namespace CodeWalker
             // 
             this.EnableDlcCheckBox.AutoSize = true;
             this.EnableDlcCheckBox.Enabled = false;
-            this.EnableDlcCheckBox.Location = new System.Drawing.Point(6, 311);
+            this.EnableDlcCheckBox.Location = new System.Drawing.Point(6, 334);
             this.EnableDlcCheckBox.Name = "EnableDlcCheckBox";
             this.EnableDlcCheckBox.Size = new System.Drawing.Size(83, 17);
-            this.EnableDlcCheckBox.TabIndex = 69;
+            this.EnableDlcCheckBox.TabIndex = 70;
             this.EnableDlcCheckBox.Text = "Enable DLC";
             this.EnableDlcCheckBox.UseVisualStyleBackColor = true;
             this.EnableDlcCheckBox.CheckedChanged += new System.EventHandler(this.EnableDlcCheckBox_CheckedChanged);
@@ -623,10 +625,10 @@ namespace CodeWalker
             this.WorldYmapWeatherFilterCheckBox.AutoSize = true;
             this.WorldYmapWeatherFilterCheckBox.Checked = true;
             this.WorldYmapWeatherFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.WorldYmapWeatherFilterCheckBox.Location = new System.Drawing.Point(6, 237);
+            this.WorldYmapWeatherFilterCheckBox.Location = new System.Drawing.Point(6, 260);
             this.WorldYmapWeatherFilterCheckBox.Name = "WorldYmapWeatherFilterCheckBox";
             this.WorldYmapWeatherFilterCheckBox.Size = new System.Drawing.Size(136, 17);
-            this.WorldYmapWeatherFilterCheckBox.TabIndex = 67;
+            this.WorldYmapWeatherFilterCheckBox.TabIndex = 68;
             this.WorldYmapWeatherFilterCheckBox.Text = "Filter ymaps by weather";
             this.WorldYmapWeatherFilterCheckBox.UseVisualStyleBackColor = true;
             this.WorldYmapWeatherFilterCheckBox.CheckedChanged += new System.EventHandler(this.WorldYmapWeatherFilterCheckBox_CheckedChanged);
@@ -636,13 +638,26 @@ namespace CodeWalker
             this.WorldYmapTimeFilterCheckBox.AutoSize = true;
             this.WorldYmapTimeFilterCheckBox.Checked = true;
             this.WorldYmapTimeFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.WorldYmapTimeFilterCheckBox.Location = new System.Drawing.Point(6, 214);
+            this.WorldYmapTimeFilterCheckBox.Location = new System.Drawing.Point(6, 237);
             this.WorldYmapTimeFilterCheckBox.Name = "WorldYmapTimeFilterCheckBox";
             this.WorldYmapTimeFilterCheckBox.Size = new System.Drawing.Size(149, 17);
-            this.WorldYmapTimeFilterCheckBox.TabIndex = 66;
+            this.WorldYmapTimeFilterCheckBox.TabIndex = 67;
             this.WorldYmapTimeFilterCheckBox.Text = "Filter ymaps by time of day";
             this.WorldYmapTimeFilterCheckBox.UseVisualStyleBackColor = true;
             this.WorldYmapTimeFilterCheckBox.CheckedChanged += new System.EventHandler(this.WorldYmapTimeFilterCheckBox_CheckedChanged);
+            // 
+            // WorldNorhYanktonYmapsCheckBox
+            // 
+            this.WorldNorhYanktonYmapsCheckBox.AutoSize = true;
+            this.WorldNorhYanktonYmapsCheckBox.Checked = true;
+            this.WorldNorhYanktonYmapsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.WorldNorhYanktonYmapsCheckBox.Location = new System.Drawing.Point(6, 205);
+            this.WorldNorhYanktonYmapsCheckBox.Name = "WorldNorhYanktonYmapsCheckBox";
+            this.WorldNorhYanktonYmapsCheckBox.Size = new System.Drawing.Size(126, 17);
+            this.WorldNorhYanktonYmapsCheckBox.TabIndex = 66;
+            this.WorldNorhYanktonYmapsCheckBox.Text = "Show North Yankton";
+            this.WorldNorhYanktonYmapsCheckBox.UseVisualStyleBackColor = true;
+            this.WorldNorhYanktonYmapsCheckBox.CheckedChanged += new System.EventHandler(this.WorldNorhYanktonYmapsCheckBox_CheckedChanged);
             // 
             // WorldScriptedYmapsCheckBox
             // 
@@ -3847,6 +3862,7 @@ namespace CodeWalker
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TrackBar MapViewDetailTrackBar;
         private System.Windows.Forms.CheckBox WorldScriptedYmapsCheckBox;
+        private System.Windows.Forms.CheckBox WorldNorhYanktonYmapsCheckBox;
         private System.Windows.Forms.ComboBox WeatherRegionComboBox;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.CheckBox WorldYmapWeatherFilterCheckBox;

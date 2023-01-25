@@ -121,6 +121,8 @@ namespace CodeWalker
 
         bool worldymaptimefilter = true;
         bool worldymapweatherfilter = true;
+        bool worldshownorthyankton = true;
+        bool worldscriptedymaps = true;
 
         bool renderpathbounds = true;
         bool renderpaths = false;
@@ -767,7 +769,7 @@ namespace CodeWalker
             foreach (var item in collisionitems)
             {
                 YbnFile ybn = gameFileCache.GetYbn(item.Name);
-                if ((ybn != null) && (ybn.Loaded))
+                if ((ybn != null) && (ybn.Loaded) && (worldshownorthyankton && ybn.Name.Contains("prologue")))
                 {
                     collisionybns.Add(ybn);
                 }
@@ -6993,6 +6995,13 @@ namespace CodeWalker
         private void WorldScriptedYmapsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             Renderer.ShowScriptedYmaps = WorldScriptedYmapsCheckBox.Checked;
+            worldscriptedymaps = WorldScriptedYmapsCheckBox.Checked;
+        }
+
+        private void WorldNorhYanktonYmapsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Renderer.ShowNorthYankton = WorldNorhYanktonYmapsCheckBox.Checked;
+            worldshownorthyankton = WorldNorhYanktonYmapsCheckBox.Checked;
         }
 
         private void WorldYmapTimeFilterCheckBox_CheckedChanged(object sender, EventArgs e)
