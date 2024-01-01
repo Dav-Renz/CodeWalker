@@ -20,6 +20,7 @@ namespace CodeWalker.World
 
         private List<Archetype> ArchetypeResults = new List<Archetype>();
         private List<YmapEntityDef> EntityResults = new List<YmapEntityDef>();
+        private List<YmapFile> YmapResults = new List<YmapFile>();
 
         public WorldSearchForm(WorldForm worldForm)
         {
@@ -365,6 +366,94 @@ namespace CodeWalker.World
             });
         }
 
+        private void WorldExporterButton_Click(object sender, EventArgs e)
+        {
+            var s = EntitySearchTextBox.Text;
+            var loadedOnly = EntitySearchLoadedOnlyCheckBox.Checked;
+
+            var gfc = WorldForm.GameFileCache;
+            if (!gfc.IsInited)
+            {
+                MessageBox.Show("Please wait for CodeWalker to initialise.");
+                return;
+            }
+            
+
+            EntitySearchTextBox.Enabled = false;
+            EntitySearchButton.Enabled = false;
+            EntitySearchAbortButton.Enabled = true;
+            EntitySearchLoadedOnlyCheckBox.Enabled = false;
+            EntitySearchExportResultsButton.Enabled = false;
+            EntitySearchSetMarkersButton.Enabled = false;
+            AbortOperation = false;
+            EntityResults.Clear();
+            EntityResultsListView.VirtualListSize = 0;
+            YmapResults.Clear();
+            YmapResultsListView.VirtualListSize = 0;
+
+            s = s.ToLowerInvariant();
+            //var h = JenkHash.GenHash(s, JenkHashInputEncoding.UTF8);
+
+            Task.Run(() =>
+            {
+
+                var rpfman = gfc.RpfMan;
+                var rpflist = loadedOnly ? gfc.ActiveMapRpfFiles.Values.ToList() : rpfman.AllRpfs;
+                var entityResultsLocal = new List<YmapEntityDef>();
+                var ymapResultsLocal = new List<YmapFile>();
+
+                foreach (var rpf in rpflist)
+                {
+                    foreach (var entry in rpf.AllEntries)
+                    {
+                        try
+                        {
+                            if (AbortOperation)
+                            {
+                                EntitySearchUpdateStatus("Search aborted!");
+                                EntitySearchComplete();
+                                return;
+                            }
+                            if (entry.NameLower.EndsWith(".ymap"))
+                            {
+                                EntitySearchUpdateStatus(entry.Path);
+
+                                YmapFile ymap = rpfman.GetFile<YmapFile>(entry);
+                                if (ymap == null) continue;
+                                if (ymap.AllEntities == null) continue;
+
+                                bool slod2Ymap = false;
+
+                                foreach (var ent in ymap.AllEntities)
+                                {
+                                    //if (ent._CEntityDef.archetypeName.Hash == h)
+                                    if (ent._CEntityDef.lodLevel == rage__eLodType.LODTYPES_DEPTH_SLOD2)
+                                    {
+                                        EntitySearchAddResult(ent);
+                                        entityResultsLocal.Add(ent);
+                                        slod2Ymap = true;
+                                    }
+                                }
+
+                                if (slod2Ymap)
+                                {
+                                    YmapSearchAddResult(ymap);
+                                    ymapResultsLocal.Add(ymap);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            EntitySearchUpdateStatus(ex.Message);
+                        }
+                    }
+                }
+
+                EntitySearchUpdateStatus("Search complete. " + entityResultsLocal.Count.ToString() + " entities found in " + ymapResultsLocal.Count.ToString() + " ymaps.");
+                EntitySearchComplete();
+            });
+        }
+
         private void EntitySearchUpdateStatus(string text)
         {
             try
@@ -393,6 +482,23 @@ namespace CodeWalker.World
                 {
                     EntityResults.Add(ent);
                     EntityResultsListView.VirtualListSize = EntityResults.Count;
+                }
+            }
+            catch { }
+        }
+
+        private void YmapSearchAddResult(YmapFile ymap)
+        {
+            try
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new Action(() => { YmapSearchAddResult(ymap); }));
+                }
+                else
+                {
+                    YmapResults.Add(ymap);
+                    YmapResultsListView.VirtualListSize = YmapResults.Count;
                 }
             }
             catch { }
@@ -450,6 +556,33 @@ namespace CodeWalker.World
             File.WriteAllText(fname, sb.ToString());
         }
 
+        private void ExporterExportButton_Click(object sender, EventArgs e)
+        {
+            if (EntityResults.Count == 0)
+            {
+                MessageBox.Show("Nothing to export!");
+                return;
+            }
+
+            SaveFileDialog.FileName = "lod_entities";
+            if (SaveFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string fname = SaveFileDialog.FileName;
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile");
+            foreach (var ent in EntityResults)
+            {
+                var dictPath = "";
+                sb.AppendLine(string.Format("{0}.{1}, {2}", ent.Archetype.DrawableDict, ent.Name, ent.Archetype._BaseArchetypeDef., ent.Ymap?.RpfFileEntry?.Path ?? ""));
+            }
+
+            File.WriteAllText(fname, sb.ToString());
+        }
+
         private void EntitySearchSetMarkersButton_Click(object sender, EventArgs e)
         {
             var usetextbox = EntityResults.Count < 250;
@@ -475,6 +608,21 @@ namespace CodeWalker.World
             else
             {
                 e.Item = new ListViewItem("Error retrieving YmapEntityDef! Please tell dexyfex");
+            }
+        }
+
+        private void YmapResultsListView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            if (e.ItemIndex < YmapResults.Count)
+            {
+                var map = YmapResults[e.ItemIndex];
+                var li = new ListViewItem(new[] { map.Name, map.RpfFileEntry?.Path ?? "" });
+                li.Tag = map;
+                e.Item = li;
+            }
+            else
+            {
+                e.Item = new ListViewItem("Error retrieving Ymap! Please don't tell dexyfex");
             }
         }
 

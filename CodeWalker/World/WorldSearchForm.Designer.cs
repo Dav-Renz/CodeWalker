@@ -31,9 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorldSearchForm));
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.EntitySearchTabPage = new System.Windows.Forms.TabPage();
+            this.worldExporterButton = new System.Windows.Forms.Button();
             this.EntitySearchSetMarkersButton = new System.Windows.Forms.Button();
             this.EntitySearchExportResultsButton = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.YmapResultsListView = new System.Windows.Forms.ListView();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EntityResultsListView = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -74,6 +78,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ArchetypeSearchTextBox = new System.Windows.Forms.TextBox();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.ExporterExportButton = new System.Windows.Forms.Button();
             this.MainTabControl.SuspendLayout();
             this.EntitySearchTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -99,11 +104,13 @@
             this.MainTabControl.Location = new System.Drawing.Point(4, 4);
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
-            this.MainTabControl.Size = new System.Drawing.Size(530, 421);
+            this.MainTabControl.Size = new System.Drawing.Size(797, 588);
             this.MainTabControl.TabIndex = 0;
             // 
             // EntitySearchTabPage
             // 
+            this.EntitySearchTabPage.Controls.Add(this.ExporterExportButton);
+            this.EntitySearchTabPage.Controls.Add(this.worldExporterButton);
             this.EntitySearchTabPage.Controls.Add(this.EntitySearchSetMarkersButton);
             this.EntitySearchTabPage.Controls.Add(this.EntitySearchExportResultsButton);
             this.EntitySearchTabPage.Controls.Add(this.splitContainer2);
@@ -117,10 +124,20 @@
             this.EntitySearchTabPage.Location = new System.Drawing.Point(4, 22);
             this.EntitySearchTabPage.Name = "EntitySearchTabPage";
             this.EntitySearchTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.EntitySearchTabPage.Size = new System.Drawing.Size(522, 395);
+            this.EntitySearchTabPage.Size = new System.Drawing.Size(789, 562);
             this.EntitySearchTabPage.TabIndex = 0;
             this.EntitySearchTabPage.Text = "Entity Search";
             this.EntitySearchTabPage.UseVisualStyleBackColor = true;
+            // 
+            // worldExporterButton
+            // 
+            this.worldExporterButton.Location = new System.Drawing.Point(606, 15);
+            this.worldExporterButton.Name = "worldExporterButton";
+            this.worldExporterButton.Size = new System.Drawing.Size(75, 23);
+            this.worldExporterButton.TabIndex = 10;
+            this.worldExporterButton.Text = "Compute";
+            this.worldExporterButton.UseVisualStyleBackColor = true;
+            this.worldExporterButton.Click += new System.EventHandler(this.WorldExporterButton_Click);
             // 
             // EntitySearchSetMarkersButton
             // 
@@ -154,14 +171,45 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.YmapResultsListView);
             this.splitContainer2.Panel1.Controls.Add(this.EntityResultsListView);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.EntityResultPanel);
-            this.splitContainer2.Size = new System.Drawing.Size(522, 301);
-            this.splitContainer2.SplitterDistance = 325;
+            this.splitContainer2.Size = new System.Drawing.Size(789, 468);
+            this.splitContainer2.SplitterDistance = 491;
             this.splitContainer2.TabIndex = 8;
+            // 
+            // YmapResultsListView
+            // 
+            this.YmapResultsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.YmapResultsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader5,
+            this.columnHeader6});
+            this.YmapResultsListView.FullRowSelect = true;
+            this.YmapResultsListView.HideSelection = false;
+            this.YmapResultsListView.Location = new System.Drawing.Point(3, 232);
+            this.YmapResultsListView.MultiSelect = false;
+            this.YmapResultsListView.Name = "YmapResultsListView";
+            this.YmapResultsListView.Size = new System.Drawing.Size(485, 217);
+            this.YmapResultsListView.TabIndex = 9;
+            this.YmapResultsListView.UseCompatibleStateImageBehavior = false;
+            this.YmapResultsListView.View = System.Windows.Forms.View.Details;
+            this.YmapResultsListView.VirtualMode = true;
+            this.YmapResultsListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.YmapResultsListView_RetrieveVirtualItem);
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Name";
+            this.columnHeader5.Width = 131;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "File";
+            this.columnHeader6.Width = 161;
             // 
             // EntityResultsListView
             // 
@@ -176,7 +224,7 @@
             this.EntityResultsListView.Location = new System.Drawing.Point(3, 0);
             this.EntityResultsListView.MultiSelect = false;
             this.EntityResultsListView.Name = "EntityResultsListView";
-            this.EntityResultsListView.Size = new System.Drawing.Size(319, 298);
+            this.EntityResultsListView.Size = new System.Drawing.Size(485, 217);
             this.EntityResultsListView.TabIndex = 8;
             this.EntityResultsListView.UseCompatibleStateImageBehavior = false;
             this.EntityResultsListView.View = System.Windows.Forms.View.Details;
@@ -211,7 +259,7 @@
             this.EntityResultPanel.Enabled = false;
             this.EntityResultPanel.Location = new System.Drawing.Point(3, 0);
             this.EntityResultPanel.Name = "EntityResultPanel";
-            this.EntityResultPanel.Size = new System.Drawing.Size(187, 298);
+            this.EntityResultPanel.Size = new System.Drawing.Size(288, 465);
             this.EntityResultPanel.TabIndex = 9;
             // 
             // EntityResultViewModelButton
@@ -233,7 +281,7 @@
             this.EntityResultPropertyGrid.Location = new System.Drawing.Point(3, 146);
             this.EntityResultPropertyGrid.Name = "EntityResultPropertyGrid";
             this.EntityResultPropertyGrid.ReadOnly = true;
-            this.EntityResultPropertyGrid.Size = new System.Drawing.Size(181, 152);
+            this.EntityResultPropertyGrid.Size = new System.Drawing.Size(282, 319);
             this.EntityResultPropertyGrid.TabIndex = 7;
             this.EntityResultPropertyGrid.ToolbarVisible = false;
             // 
@@ -273,7 +321,7 @@
             this.EntityResultYmapTextBox.Location = new System.Drawing.Point(3, 64);
             this.EntityResultYmapTextBox.Name = "EntityResultYmapTextBox";
             this.EntityResultYmapTextBox.ReadOnly = true;
-            this.EntityResultYmapTextBox.Size = new System.Drawing.Size(180, 20);
+            this.EntityResultYmapTextBox.Size = new System.Drawing.Size(281, 20);
             this.EntityResultYmapTextBox.TabIndex = 3;
             // 
             // label9
@@ -293,7 +341,7 @@
             this.EntityResultNameTextBox.Location = new System.Drawing.Point(3, 23);
             this.EntityResultNameTextBox.Name = "EntityResultNameTextBox";
             this.EntityResultNameTextBox.ReadOnly = true;
-            this.EntityResultNameTextBox.Size = new System.Drawing.Size(180, 20);
+            this.EntityResultNameTextBox.Size = new System.Drawing.Size(281, 20);
             this.EntityResultNameTextBox.TabIndex = 1;
             // 
             // EntitySearchStatusLabel
@@ -303,7 +351,7 @@
             this.EntitySearchStatusLabel.AutoEllipsis = true;
             this.EntitySearchStatusLabel.Location = new System.Drawing.Point(6, 73);
             this.EntitySearchStatusLabel.Name = "EntitySearchStatusLabel";
-            this.EntitySearchStatusLabel.Size = new System.Drawing.Size(510, 18);
+            this.EntitySearchStatusLabel.Size = new System.Drawing.Size(777, 18);
             this.EntitySearchStatusLabel.TabIndex = 7;
             this.EntitySearchStatusLabel.Text = "Ready";
             // 
@@ -378,7 +426,7 @@
             this.ArchetypeSearchTabPage.Controls.Add(this.ArchetypeSearchTextBox);
             this.ArchetypeSearchTabPage.Location = new System.Drawing.Point(4, 22);
             this.ArchetypeSearchTabPage.Name = "ArchetypeSearchTabPage";
-            this.ArchetypeSearchTabPage.Size = new System.Drawing.Size(522, 395);
+            this.ArchetypeSearchTabPage.Size = new System.Drawing.Size(789, 562);
             this.ArchetypeSearchTabPage.TabIndex = 1;
             this.ArchetypeSearchTabPage.Text = "Archetype Search";
             this.ArchetypeSearchTabPage.UseVisualStyleBackColor = true;
@@ -600,11 +648,22 @@
             this.SaveFileDialog.AddExtension = false;
             this.SaveFileDialog.Filter = "Text files|*.txt|CSV files|*.csv|All files|*.*";
             // 
+            // ExporterExportButton
+            // 
+            this.ExporterExportButton.Enabled = false;
+            this.ExporterExportButton.Location = new System.Drawing.Point(606, 41);
+            this.ExporterExportButton.Name = "ExporterExportButton";
+            this.ExporterExportButton.Size = new System.Drawing.Size(75, 23);
+            this.ExporterExportButton.TabIndex = 11;
+            this.ExporterExportButton.Text = "Export world info";
+            this.ExporterExportButton.UseVisualStyleBackColor = true;
+            this.ExporterExportButton.Click += new System.EventHandler(this.ExporterExportButton_Click);
+            // 
             // WorldSearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(536, 428);
+            this.ClientSize = new System.Drawing.Size(803, 595);
             this.Controls.Add(this.MainTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WorldSearchForm";
@@ -678,5 +737,10 @@
         private System.Windows.Forms.Button ArchetypeSearchExportResultsButton;
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
         private System.Windows.Forms.Button EntitySearchSetMarkersButton;
+        private System.Windows.Forms.Button worldExporterButton;
+        private System.Windows.Forms.ListView YmapResultsListView;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Button ExporterExportButton;
     }
 }
